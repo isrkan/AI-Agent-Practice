@@ -42,10 +42,22 @@ Once we have selected our LLM, set up the necessary connection and authenticatio
       * Generate a new API key.
       * **Security Best Practice:** **NEVER hard-code API keys** directly into our source code. Use environment variables or a secure secret management system to store sensitive credentials.
 
-#### Step 3: Create a basic prompt-response loop
+#### Step 3: Fine-tune the model (Optional)
+If using a model that supports fine-tuning (such as open-source models like LLaMA, Mistral, or proprietary models like OpenAI, Gemini, or Claude), we may customize it for better performance on our specific domain or task. Steps to follow:
+1. Collect domain-specific training data: Format examples in prompt-response pairs or structured instruction datasets.
+2. Preprocess and clean the data: Ensure data consistency, remove noisy examples, and format inputs properly.
+3. Perform the fine-tuning.
+4. Train and validate: Monitor loss and evaluate on validation examples.
+5. Deploy the fine-tuned model: Use the fine-tuned version instead of the base model in our integration logic.
+
+**Tips:**
+* Fine-tune only if you have consistent examples that demonstrate a performance gap with the base model.
+* For minor tweaks (e.g., tone or format), try prompt engineering or system prompts before committing to tuning.
+
+#### Step 4: Create a basic prompt-response loop
 Write a simple script to test the connection and verify that the LLM is working as expected. This script will represent the most fundamental interaction with our agent's brain.
 
-#### Step 4: Test with simple queries
+#### Step 5: Test with simple queries
 Run scripts with a variety of simple queries to confirm:
   * The connection is stable.
   * The LLM provides coherent and relevant responses.
@@ -53,7 +65,7 @@ Run scripts with a variety of simple queries to confirm:
 
 Test with different types of questions: factual queries, creative requests, and simple commands.
 
-#### Step 5: Create a modular LLM structure
+#### Step 6: Create a modular LLM structure
 For scalable and maintainable applications, especially when using different models for different tasks (e.g., summarization, RAG, classification), adopt a modular directory structure for the LLMs. This pattern centralizes LLM management, making it easy to swap models or providers without extensive code changes. Create a dedicated `llms` directory in the project with the following structure:
 
 ```

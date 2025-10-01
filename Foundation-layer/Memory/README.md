@@ -7,12 +7,21 @@ Memory in AI agents often incorporates a blend of different memory types, each s
 ## Implementation guide
 Follow these steps to successfully integrate a functional and scalable memory system into the agent's application.
 
-### **Step 1: Implement short-term memory (STM):** 
+### **Step 1: Implement transactional memory (state management & action auditing):**
+Transactional memory is responsible for recording actions and state changes with strong consistency and integrity. It serves as the system of record, ensuring that every action, state transition, and critical decision made by the agent is logged reliably. This memory type is essential for auditability, debugging, rollback capabilities, and maintaining system integrity across distributed operations. This memory type requires ACID guarantees (atomicity, consistency, isolation, durability) to ensure that state changes are recorded correctly even in the face of system failures or concurrent operations.
+* **Implementation:** Transactional memory is implemented using a durable transactional store that logs each action the agent performs, along with its inputs, outputs, timestamps, and resulting state changes. This creates an immutable audit trail. For complex workflows, implement transaction boundaries that ensure multi-step operations either complete fully or roll back entirely. Use database transactions or event sourcing patterns to maintain consistency. Key components include:
+    * Action logging: Record every action the agent takes, including tool calls, API requests, and state modifications, with complete metadata (timestamp, user ID, session ID, action type, parameters, and results).
+    * State snapshots: Periodically capture the complete state of the agent's context to enable rollback and recovery.
+    * Audit trail: Maintain an immutable log of all operations for compliance, debugging, and analysis purposes.
+    * Transaction boundaries: Define clear transaction boundaries for multi-step operations to ensure all-or-nothing execution semantics.
+* **Where it's stored:** Typically implemented using relational databases (e.g., PostgreSQL, MySQL) or distributed databases (e.g., CockroachDB) that guarantee ACID compliance. Event-sourcing frameworks, append-only logs (Kafka), or blockchain-based ledgers may also be suitable depending on requirements for auditability and immutability. The schema should include tables for action logs, state snapshots, and transaction metadata with proper indexing on timestamps and entity IDs.
+
+### **Step 2: Implement short-term memory (STM):** 
 Start with a simple, in-memory conversation history. This is the simplest form of memory and is essential for any conversational agent. STM, also known as working memory, is the agent's immediate context. It stores information from the current conversation or session, like recent messages, entities, or a user's stated goal. It's temporary and typically gets cleared when the session ends.
 * **Implementation:** STM is often implemented by maintaining a sliding window of the conversation history, which is included in the LLM's prompt for each new turn. Typically we use an in-memory list or queue that holds the last N messages or tokens. The goal is to keep the most recent and relevant context of the conversation within the LLM's context window. For longer conversations, strategies like summarization or truncation are used to keep the prompt size manageable and within the LLM's token limit.
 * **Where it's stored:** While STM can be stored in-memory within the application for a single session, real-world applications need to persist this memory across different requests from the same user or a session. Use a fast key-value cache like Redis to associate a user's session ID with their conversation history. For more complex applications, a document database like MongoDB or a relational database like PostgreSQL can be used to store session data.
 
-### **Step 2: Implement long-term memory (LTM):**
+### **Step 3: Implement long-term memory (LTM):**
 LTM is persistent knowledge that the agent retains across sessions, enabling it to recall information over a longer period. This is essential for personalization, complex reasoning and long-horizon tasks. LTM is implemented using RAG, where the agent fetches relevant information from a stored knowledge base to enhance its responses. LTM can be broken down into several sub-types:
 
 * **Episodic memory (Events & experiences):** The memory of specific past events or interactions. This is like the agent's personal diary. It allows the agent to recall what happened in a specific conversation or when a particular action was performed.
@@ -28,7 +37,7 @@ LTM is persistent knowledge that the agent retains across sessions, enabling it 
     * **Implementation:** Associative memory is often built on top of semantic and episodic memory by using a graph-based approach (GraphRAG). Information is stored as nodes (concepts, entities) and edges (relationships), allowing the agent to navigate and retrieve related information efficiently.
     * **Where it's stored:** This requires a graph database (e.g., Neo4j, ArangoDB) or a specialized multi-modal vector database that can store and query relationships between entities.
 
-### Step 3: Implement memory management
+### Step 4: Define memory management
 An agent with a perfect, unfiltered memory can become inefficient and costly. Implementing a system to manage and optimize memory is essential for long-term performance.
 * **Memory consolidation:** This is the process of moving information from short-term to long-term memory. It is crucial for managing context and ensuring important details are not forgotten. Techniques include:
     - Summarization: When a conversation gets too long, an autonomous process can summarize key points from the STM and store the summary in LTM, allowing the agent to "remember" the gist of the conversation without retaining every single token.

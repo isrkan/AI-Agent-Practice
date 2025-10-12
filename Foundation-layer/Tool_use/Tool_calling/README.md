@@ -215,8 +215,8 @@ tool_registry = ToolRegistry()
 - **Schema generation:** Automatically generates tool schemas from function signatures and docstrings.
 - **Easy retrieval:** Provides methods to get individual tools or all tools at once.
 
-#### Step 5: Integrate tools with your LLM
-Now connect the tool registry to your LLM. The exact implementation depends on your framework.
+#### Step 5: Integrate tools with our LLM
+Now connect the tool registry to our LLM. The exact implementation depends on our framework.
 
 **Example: Using LangChain**
 

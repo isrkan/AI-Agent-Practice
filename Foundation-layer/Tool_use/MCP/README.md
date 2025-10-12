@@ -27,7 +27,7 @@ Before we can work with MCP and build our agent, we need to install the necessar
 pip install langchain-mcp-adapters langchain-openai langgraph python-dotenv
 ```
 
-- `langchain-mcp-adapters`: Provides the bridge between MCP servers and LangChain's tool interface
+- `langchain-mcp-adapters`: Provides the bridge between MCP servers and LangChain's tool interface. Installing it also automatically installs the `mcp` package, which includes the `FastMCP` server used to build MCP-compatible tools.
 - `langchain-openai`: OpenAI integration for LangChain
 - `langgraph`: Graph-based agent orchestration framework
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     mcp.run(transport="stdio")
 ```
 
-Similar to the math server, we create a weather server with a tool for getting weather information. The tool is decorated with `@mcp.tool()` and includes a docstring. Note that this tool is async, demonstrating that MCP supports both synchronous and asynchronous functions. In a production environment, this would call an actual weather API.
+Similar to the math server, we create a weather server with a tool for getting weather information. The tool is decorated with `@mcp.tool()` and includes a docstring. Note that this tool is async, demonstrating that MCP supports both synchronous and asynchronous functions. We define the tool with `async def` because it's meant to simulate calling an external API, like a weather service. Asynchronous functions let the server handle multiple requests efficiently without waiting (or "blocking") while one tool finishes. This is especially useful for slow operations like network requests. In a production environment, this would call an actual weather API.
 
 
 ## Step 3: Initialize the MCP client and connect to servers
@@ -188,6 +188,7 @@ When we call `await client.get_tools()`, it:
 4. Converts tool schemas to LangChain-compatible format
 5. Returns a list of tools ready to use
 
+The `client.get_tools()` function is asynchronous — it launches each tool server as a background process and communicates with them. Using `await` ensures that Python waits for those servers to start and respond, without freezing the entire app. This allows our program to remain responsive and efficient while it fetches tools over stdio.
 
 ## Step 4: Define the agent state
 Before building the agent graph, we need to define the state structure that will be passed between nodes. The state maintains the conversation context and tracks the agent's workflow.

@@ -5,8 +5,6 @@ Prompt engineering is the practice of designing and optimizing prompts to guide 
 ### Implementation guide
 Follow these steps to develop effective prompts for our AI agent system:
 
-### Implementation guide
-
 #### Step 1: Define clear goals and success criteria
 Before writing any prompt, start by establishing exactly what we want our AI agent to accomplish. Vague goals lead to inconsistent outputs and wasted iteration time.
 

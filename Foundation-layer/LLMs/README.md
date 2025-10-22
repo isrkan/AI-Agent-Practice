@@ -40,7 +40,7 @@ Once we have selected our LLM, set up the necessary connection and authenticatio
 2.  **Obtain and secure API keys:**
       * Create an account with the LLM provider.
       * Generate a new API key.
-      * **Security Best Practice:** **NEVER hard-code API keys** directly into our source code. Use environment variables or a secure secret management system to store sensitive credentials.
+      * **Security best practice:** **NEVER hard-code API keys** directly into our source code. Use environment variables or a secure secret management system to store sensitive credentials.
 
 #### Step 3: Fine-tune the model (Optional)
 If using a model that supports fine-tuning (such as open-source models like LLaMA, Mistral, or proprietary models like OpenAI, Gemini, or Claude), we may customize it for better performance on our specific domain or task. Steps to follow:

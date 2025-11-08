@@ -480,7 +480,7 @@ Use 2-4 examples that cover different scenarios (clear-cut cases, edge cases, am
 
 
 #### Step 8: Create a prompt registry
-With a working prompts, create a centralized place for all our prompts:
+With working prompts, create a centralized place for all our prompts:
 
 ```python
 # prompts/prompt_registry.py

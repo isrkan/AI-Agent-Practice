@@ -141,21 +141,24 @@ Context distraction occurs when irrelevant information overwhelms relevant conte
 - Context pruning removing low-relevance information.
 
 #### Context confusion
-Context confusion occurs when contradictory or ambiguous information causes the agent to produce inconsistent or uncertain outputs. Sources include:
+Context confusion occurs when contradictory, ambiguous or irrelevant information causes the agent to produce inconsistent or uncertain outputs. Sources include:
 - Contradictory facts: Different sources providing conflicting information.
 - Ambiguous instructions: Unclear or conflicting directives in system prompts.
 - Temporal inconsistencies: Outdated information conflicting with current data.
+- Irrelevant or extraneous context: Injecting unnecessary details, unrelated memories, unused tools, or non-task-specific content that the model mistakenly incorporates into its reasoning, leading to degraded or incorrect outputs.
 
 **Detection strategies**:
 - Contradiction detection comparing information from different sources.
 - Confidence scoring identifying uncertain or ambiguous situations.
 - Temporal consistency checking for outdated information.
+- Relevance auditing detecting context components that score low on semantic similarity or task relevance but still appear in the context window.
 
 **Mitigation approaches**:
 - Source prioritization using authority, recency, and reliability.
 - Explicit uncertainty communication when contradictions exist.
 - Temporal tagging and freshness scoring for all information.
 - Conflict resolution strategies (user clarification, majority voting, expert sources).
+- Use RAG to pull only the most relevant context elements - including tool descriptions, memory items, knowledge snippets, and procedural rules.
 
 #### Context clash
 Context clash occurs when information from different sources conflicts, creating ambiguity about what the agent should believe or how it should respond.
@@ -217,6 +220,7 @@ Compress strategies reduce the size of necessary information without losing crit
 - **Tool result compression**: Summarize verbose tool outputs, extracting key information and discarding unnecessary details.
 - **Memory consolidation**: Merge related memories and episodes over time, preventing fragmentation while preserving essential information.
 - **Hierarchical compression**: Compress at different granularities - keep recent messages verbatim, summarize older messages, and provide only high-level summaries of ancient history.
+- **Context trimming**: Remove low-relevance, low-importance or outdated context elements. Use relevance scoring, temporal decay and priority thresholds to drop information that no longer contributes to the current task.
 
 ##### *Order* strategies: Structuring and sequencing context
 These strategies control how information is arranged within the prompt and how ordering affects model attention. Because LLMs do not weigh all tokens equally, as LLMs prioritize some parts of the context window more than others (early + final tokens), the layout of context has a direct impact on reliability, alignment, and task performance.

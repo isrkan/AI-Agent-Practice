@@ -45,7 +45,7 @@ Shapes agent responses and output formatting:
 ### Intelligence-layer
 Advanced reasoning and knowledge retrieval:
 - **Context-engineering/**: Context management and failure mitigation
-- **RAG-system/**: 17+ retrieval techniques including GraphRAG, RAPTOR, Self-RAG
+- **RAG-system/**: 19 retrieval techniques across 8 categories including GraphRAG, RAPTOR, Self-RAG
 
 ### Architecture-and-orchestration-layer
 Complex workflow orchestration:
@@ -146,11 +146,14 @@ Located in `Foundation-layer/Tool_use/MCP/servers/`:
 
 ### RAG Techniques
 Organized by category in `Intelligence-layer/RAG-system/RAG-techniques/`:
-- Context enrichment
-- Query enhancement
-- Ranking and reranking
-- Iterative retrieval
+- Context and content enrichment (semantic chunking, context windows, contextual compression)
+- Query enhancement (query transformations, hypothetical document embedding)
+- Ranking and reranking (fusion retrieval, reranking)
+- Iterative techniques (Self-RAG, Corrective RAG, adaptive retrieval, feedback loops)
 - Structured retrieval (GraphRAG, RAPTOR)
+- Indexing (hierarchical indices)
+- Evaluation (DeepEval framework)
+- Explainability and transparency
 
 ## Best Practices for AI Assistants
 
@@ -176,7 +179,7 @@ Organized by category in `Intelligence-layer/RAG-system/RAG-techniques/`:
 3. Include examples with multiple LLM providers if possible
 
 **Adding a new RAG technique:**
-1. Identify category (query enhancement, ranking, iterative, etc.)
+1. Identify category (context enrichment, query enhancement, ranking, iterative, structured retrieval, indexing, evaluation, or explainability)
 2. Place in appropriate subdirectory under `Intelligence-layer/RAG-system/RAG-techniques/`
 3. Include evaluation if applicable
 
@@ -187,10 +190,10 @@ Organized by category in `Intelligence-layer/RAG-system/RAG-techniques/`:
 
 ## File Statistics
 
-- **Total Content Files**: 83
-- **Jupyter Notebooks**: 61 (73.5%)
-- **Python Scripts**: 6 (7.2%)
-- **Markdown Documentation**: 16 (19.3%)
+- **Total Content Files**: 84
+- **Jupyter Notebooks**: 61 (72.6%)
+- **Python Scripts**: 6 (7.1%)
+- **Markdown Documentation**: 17 (20.2%)
 
 ## Important Files
 
